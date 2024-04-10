@@ -24,7 +24,8 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Repositório para a criação de uma API de um board onde pode-se ter tasks e subtasks.
+Desenvolvido para a disciplina de Programação Web e Mobile.
 
 ## Installation
 
