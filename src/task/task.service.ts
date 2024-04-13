@@ -31,7 +31,11 @@ export class TaskService {
     };
 
     async getTaskById(taskId: number): Promise<TaskEntity> {
-        return await this.taskRepository.findOne({ where: { id: taskId }, relations: ['taskType', 'parent', 'children', 'children.taskType'] });
+        const getTask = await this.taskRepository.findOne({ where: { id: taskId }, relations: ['taskType', 'parent', 'children', 'children.taskType'] });
+
+        if (!getTask) throw new NotFoundException(`Task not found`);
+
+        return getTask;
     }
 
     async checkParentIsValid(parentId: number): Promise<TaskEntity> {

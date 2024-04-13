@@ -34,5 +34,7 @@ export class TaskController {
         const getTask: TaskEntity = await this.taskService.getTaskById(id);
 
         return new ReturnTaskById(getTask);
-    }
+    };
+
+    
 };
