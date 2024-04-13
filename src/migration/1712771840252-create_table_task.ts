@@ -18,12 +18,6 @@ export class CreateTableTask1712771840252 implements MigrationInterface {
             )
             TABLESPACE pg_default;
         `);
-
-        // Definir o OWNER da tabela
-        await queryRunner.query(`
-            ALTER TABLE IF EXISTS public.task
-                OWNER TO postgres;
-        `);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

@@ -11,12 +11,6 @@ export class CreateTableTaskType1712969387713 implements MigrationInterface {
                 type character varying COLLATE pg_catalog."default" NOT NULL
             )
         `);
-
-        // Definir o OWNER da tabela
-        await queryRunner.query(`
-            ALTER TABLE IF EXISTS public."taskType"
-                OWNER to postgres;
-        `);
     };
 
     public async down(queryRunner: QueryRunner): Promise<void> {
