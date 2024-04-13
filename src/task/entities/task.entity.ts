@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { TaskTypeEntity } from "src/task-type/entities/task-type.entity";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'task'})
 export class TaskEntity {
@@ -22,4 +23,14 @@ export class TaskEntity {
 
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
+
+    @ManyToOne(() => TaskTypeEntity, (taskType) => taskType.id)
+    @JoinColumn({ name: 'typeId', referencedColumnName: 'id'})
+    taskType: TaskTypeEntity;
+
+    @ManyToOne(() => TaskEntity, (task) => task.parentId)
+    parent: TaskEntity;
+
+    @OneToMany(() => TaskEntity, (task) => task.parent)
+    children: TaskEntity[];
 };
