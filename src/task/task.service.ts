@@ -26,6 +26,10 @@ export class TaskService {
         return await this.taskRepository.find({ relations: ['taskType', 'parent', 'children'], order: { createdAt: 'ASC' } });
     };
 
+    async getRootTasks(): Promise<TaskEntity[]> {
+        return await this.taskRepository.find({ relations: ['taskType', 'parent', 'children', 'children.taskType'], where: { parentId: null}, order: { createdAt: 'ASC' } });
+    };
+
     async checkParentIsValid(parentId: number): Promise<TaskEntity> {
         const parent = await this.taskRepository.findOne({
             where: { id: parentId }
