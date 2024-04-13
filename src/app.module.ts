@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TaskModule } from './task/task.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TaskTypeModule } from './task-type/task-type.module';
 
 @Module({
   imports: [
@@ -18,9 +19,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     entities: [`${__dirname}/**/*.entity{.ts,.js}`],
     migrations: [`${__dirname}/migration/*{.ts,.js}`],
     migrationsRun: true,
-  }),
-  TaskModule],
+}),
+  TaskModule,
+  TaskTypeModule],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {};
