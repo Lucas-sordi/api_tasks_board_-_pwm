@@ -9,7 +9,7 @@ export class TaskService {
     constructor(
         @InjectRepository(TaskEntity)
         private readonly taskRepository: Repository<TaskEntity>
-    ) {}
+    ) {};
     
     async createTask(createTaskDTO: CreateTaskDTO): Promise<{ id: number }> {
         const saveTask = await this.taskRepository.save({ ...createTaskDTO });
@@ -19,5 +19,5 @@ export class TaskService {
 
     async getAllTasks(): Promise<TaskEntity[]> {
         return this.taskRepository.find();
-    }
+    };
 };
