@@ -3,7 +3,6 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 export class CreateTableTask1712771840252 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        // Criar a tabela
         await queryRunner.query(`
             CREATE TABLE IF NOT EXISTS public.task
             (
@@ -18,7 +17,7 @@ export class CreateTableTask1712771840252 implements MigrationInterface {
             )
             TABLESPACE pg_default;
         `);
-    }
+    };
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
