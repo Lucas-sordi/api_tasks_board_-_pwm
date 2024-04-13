@@ -1,4 +1,4 @@
-import { IsNumber, IsOptional, IsString } from "class-validator";
+import { IsInt, IsOptional, IsString } from "class-validator";
 
 export class CreateTaskDTO {
 
@@ -8,10 +8,10 @@ export class CreateTaskDTO {
     @IsString()
     description: string;
 
-    @IsNumber()
+    @IsInt()
     @IsOptional()
     parentId: number;
 
-    @IsNumber()
+    @IsInt()
     typeId: number;
 };
