@@ -23,7 +23,6 @@ export class ReturnAllTasksDTO {
 
         if (taskEntity.parent) this.parent = new parentDTO(taskEntity);
     };
-
 };
 
 class ChilrenDTO {

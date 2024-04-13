@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateTaskDTO } from './dtos/createTask.dto';
 import { TaskService } from './task.service';
 import { ReturnAllTasksDTO } from './dtos/returnAllTasks.dto';
 import { TaskEntity } from './entities/task.entity';
 import { ReturnRootTasksDTO } from './dtos/returnRootTasks.dto';
+import { ReturnTaskById } from './dtos/returnTaskById.dto';
 
 @Controller('task')
 export class TaskController {
@@ -27,4 +28,11 @@ export class TaskController {
 
         return getRootTasks.map(task => new ReturnRootTasksDTO(task));
     };
+
+    @Get('/:id')
+    async getById(@Param('id') id: number): Promise<ReturnRootTasksDTO>{
+        const getTask: TaskEntity = await this.taskService.getTaskById(id);
+
+        return new ReturnTaskById(getTask);
+    }
 };
