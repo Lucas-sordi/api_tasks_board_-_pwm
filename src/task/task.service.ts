@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDTO } from './dtos/createTask.dto';
 import { TaskEntity } from './entities/task.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,7 +14,8 @@ export class TaskService {
     ) {};
     
     async createTask(createTaskDTO: CreateTaskDTO): Promise<{ id: number }> {
-        await this.taskTypeService.getTaskTypeById(createTaskDTO.typeId);
+        await this.taskTypeService.getTaskTypeById(createTaskDTO.typeId); // valida se o TypeId existe
+        if (createTaskDTO.parentId) await this.checkParentIsValid(createTaskDTO.parentId); // valida se o ParentId existe e se ele tem parent
 
         const saveTask = await this.taskRepository.save({ ...createTaskDTO });
 
@@ -22,6 +23,18 @@ export class TaskService {
     };
 
     async getAllTasks(): Promise<TaskEntity[]> {
-        return this.taskRepository.find();
+        return await this.taskRepository.find({ relations: ['taskType', 'parent', 'children'], order: { createdAt: 'ASC' } });
     };
+
+    async checkParentIsValid(parentId: number): Promise<TaskEntity> {
+        const parent = await this.taskRepository.findOne({
+            where: { id: parentId }
+        });
+
+        if (!parent) throw new NotFoundException(`ParentId not found`);
+
+        if (parent.parentId) throw new BadRequestException(`The ParentId informed isn't a root task`);
+
+        return parent;
+    }
 };
