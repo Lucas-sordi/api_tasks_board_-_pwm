@@ -25,14 +25,58 @@
 ## Description
 
 Repositório para a criação de uma API de um board onde pode-se ter tasks e subtasks.
+</br>
 Desenvolvido para a disciplina de Programação Web e Mobile.
-
+##
+    - É possível criar tasks e subtasks;
+    - As tasks possuem nome, descrição e tipo. Opcionalmente possuem um pai (caso possua, será uma subtask);
+    - Subtasks não podem ter subtasks;
+    - Não é possível excluir uma task que possui subtasks;
+    - Não é possível adicionar um pai (PUT) à uma task que possui subtaks;
+##
+##
+## Exceptions
+- **Buscar task types | GET /task-type**
+	- 200 Sucesso
+##
+- **Criar task | POST /task**
+	- 201 Sucesso
+	- 404 TypeId não existe
+	- 404 ParentId não existe
+	- 400 O id informado como ParentId possui pai
+##
+- **Atualizar task | PUT /task/:id**
+	- 200 Sucesso
+	- 404 TaskId não existe
+	- 404 TypeId não existe
+	- 404 ParentId não existe
+	- 400 ParentId tem pai
+	- 400 ParentId é o id da task que está sendo atualizada
+	- 400 No body foi enviado um ParentId válido, mas a task que está sendo atualizada possui subtasks
+##
+- **Excluir task | DELETE /task/:id**
+	- 201 Sucesso
+	- 404 TaskId não existe
+	- 400 A task possui subtasks
+##
+- **Buscar todas as tasks | GET /task/all**
+	- 200 Sucesso
+##
+- **Buscar tasks pai /task/roots**
+	- 200 Sucesso
+##
+- **Buscar task por Id /task/:id**
+	- 200 Sucesso
+	- 404 TaskId não existe
+##
+##
 ## Installation
 
 ```bash
 $ npm install
 ```
-
+##
+##
 ## Running the app
 
 ```bash
@@ -41,34 +85,9 @@ $ npm run start
 
 # watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
+##
+##
 ## License
 
 Nest is [MIT licensed](LICENSE).
