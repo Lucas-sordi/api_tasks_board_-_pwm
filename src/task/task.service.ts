@@ -36,7 +36,7 @@ export class TaskService {
         if (!getTask) throw new NotFoundException(`Task not found`);
 
         return getTask;
-    }
+    };
 
     async createTask(createTaskBody: CreateTaskDTO): Promise<TaskEntity> {
         await this.taskTypeService.getTaskTypeById(createTaskBody.typeId); // valida se o TypeId existe
@@ -45,16 +45,25 @@ export class TaskService {
         return await this.taskRepository.save({ ...createTaskBody });
     };
 
-    async updateTask(taskId, updateTaskBody: CreateTaskDTO): Promise<{ message: string }> {
+    async updateTask(taskId: number, updateTaskBody: CreateTaskDTO): Promise<{ message: string }> {
         await this.taskTypeService.getTaskTypeById(updateTaskBody.typeId); // valida se o TypeId existe
         if (updateTaskBody.parentId) {
+            if (updateTaskBody.parentId == taskId) throw new BadRequestException(`Task can't be its own parent`); // valida se o ParentId é diferente do TaskId
             await this.checkParentIsValid(updateTaskBody.parentId); // valida se o ParentId existe e se ele tem parent
             await this.checkIfTaskExistsAndHasChildren(taskId); // valida se a Task existe e tem filhos
         };
 
         await this.taskRepository.update(taskId, { ...updateTaskBody });
 
-        return { message : `Task updated successfully`}
+        return { message: `Task updated successfully`};
+    };
+
+    async deleteTask(taskId: number) {
+        await this.checkIfTaskExistsAndHasChildren(taskId, `Task can't be deleted because it has children`); // valida se a Task existe e tem filhos
+
+        await this.taskRepository.delete(taskId);
+
+        return { message: `Task deleted successfully`};
     };
 
     async checkParentIsValid(parentId: number): Promise<TaskEntity> {
@@ -69,14 +78,14 @@ export class TaskService {
         return;
     };
 
-    async checkIfTaskExistsAndHasChildren(taskId: number): Promise<TaskEntity> {
+    async checkIfTaskExistsAndHasChildren(taskId: number, customMessage?: string): Promise<TaskEntity> {
         const task = await this.taskRepository.findOne({
             where: { id: taskId },
             relations: ['children']
         });
 
         if (!task) throw new NotFoundException(`Task not found`);
-        if (task.children.length) throw new BadRequestException(`Task can't have a parent because it has children`);
+        if (task.children.length) throw new BadRequestException(customMessage || `Task can't have a parent because it has children`);
 
         return;
     };
