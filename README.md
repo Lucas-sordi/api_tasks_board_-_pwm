@@ -25,14 +25,13 @@
 ## Description
 
 Repositório para a criação de uma API de um board onde pode-se ter tasks e subtasks.
-</br>
 Desenvolvido para a disciplina de Programação Web e Mobile.
-##
+- **Regras de negócio**:
     - É possível criar tasks e subtasks;
-    - As tasks possuem nome, descrição e tipo. Opcionalmente possuem um pai (caso possua, será uma subtask);
+    - As tasks possuem nome, descrição e tipo obrigatoriamente. Opcionalmente possuem um pai (caso possua, será uma subtask);
     - Subtasks não podem ter subtasks;
     - Não é possível excluir uma task que possui subtasks;
-    - Não é possível adicionar um pai (PUT) à uma task que possui subtaks;
+    - Não é possível adicionar um pai (PUT) à uma task que possui subtaks.
 ##
 ##
 ## Exceptions
