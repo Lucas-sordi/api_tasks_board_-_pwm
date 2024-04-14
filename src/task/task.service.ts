@@ -50,6 +50,8 @@ export class TaskService {
         if (updateTaskBody.parentId) {
             await this.checkIfTaskExistsAndHasSubtasks(taskId, `Task can't have a parent because it has subtasks`);
             await this.checkParentIsValid(updateTaskBody.parentId, taskId);
+        } else {
+            await this.checkTaskExists(taskId);
         };
 
         await this.taskRepository.update(taskId, { ...updateTaskBody });
@@ -65,10 +67,8 @@ export class TaskService {
         return { message: `Task deleted successfully`};
     };
 
-
-
-
-
+    
+    // Funções de validação
     async checkParentIsValid(parentId: number, taskId?: number): Promise<TaskEntity> {
         if (parentId == taskId) throw new BadRequestException(`Task can't be its own parent`); // valida se o ParentId é diferente do TaskId
 
@@ -90,6 +90,17 @@ export class TaskService {
 
         if (!task) throw new NotFoundException(`Task not found`); // valida se a Task existe
         if (task.subtasks.length) throw new BadRequestException(customMessage || `Task has subtasks`); // valida se a Task tem filhos
+
+        return;
+    };
+
+    async checkTaskExists(taskId: number): Promise<TaskEntity> {
+        const task = await this.taskRepository.findOne({
+            where: { id: taskId },
+            relations: ['subtasks']
+        });
+
+        if (!task) throw new NotFoundException(`Task not found`); // valida se a Task existe
 
         return;
     };
