@@ -7,7 +7,7 @@ export class TaskTypeController {
     constructor(private readonly taskTypeService: TaskTypeService) {};
 
     @Get()
-    async getAllTasks(): Promise<ReturnTaskTypeDTO[]> {
+    async getAll(): Promise<ReturnTaskTypeDTO[]> {
         return this.taskTypeService.getAllTaskTypes();
     };
 };
