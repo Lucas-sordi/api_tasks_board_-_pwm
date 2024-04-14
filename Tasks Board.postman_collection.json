@@ -22,7 +22,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Titulo task 1\",\r\n    \"description\": \"Descricao da task 1\",\r\n    \"parentId\": 46,\r\n    \"typeId\": 2\r\n}",
+					"raw": "{\r\n    \"name\": \"Titulo task 1\",\r\n    \"description\": \"Descricao da task 1\",\r\n    \"parentId\": null,\r\n    \"typeId\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -40,14 +40,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Titulo Novo\",\r\n    \"description\": \"Descricao da task atualizada\",\r\n    \"parentId\": null,\r\n    \"typeId\": 3\r\n}",
+					"raw": "{\r\n    \"name\": \"Titulo Novo\",\r\n    \"description\": \"Descricao da task atualizada\",\r\n    \"parentId\": null,\r\n    \"typeId\": 6\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:3000/task/39"
+				"url": "http://localhost:3000/task/1"
 			},
 			"response": []
 		},
@@ -74,7 +74,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:3000/task/42"
+				"url": "http://localhost:3000/task/1"
 			},
 			"response": []
 		},
@@ -83,7 +83,7 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:3000/task/42"
+				"url": "http://localhost:3000/task/1"
 			},
 			"response": []
 		}

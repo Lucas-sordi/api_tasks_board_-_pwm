@@ -40,15 +40,17 @@ export class TaskService {
 
     async createTask(createTaskBody: CreateTaskDTO): Promise<TaskEntity> {
         await this.checkTaskTypeExists(createTaskBody.typeId);
-        await this.checkParentIsValid(createTaskBody.parentId);
+        if (createTaskBody.parentId) await this.checkParentIsValid(createTaskBody.parentId);
 
         return await this.taskRepository.save({ ...createTaskBody });
     };
 
     async updateTask(taskId: number, updateTaskBody: CreateTaskDTO): Promise<{ message: string }> {
         await this.checkTaskTypeExists(updateTaskBody.typeId); 
-        await this.checkIfTaskExistsAndHasSubtasks(taskId, `Task can't have a parent because it has subtasks`);
-        await this.checkParentIsValid(updateTaskBody.parentId, taskId);
+        if (updateTaskBody.parentId) {
+            await this.checkIfTaskExistsAndHasSubtasks(taskId, `Task can't have a parent because it has subtasks`);
+            await this.checkParentIsValid(updateTaskBody.parentId, taskId);
+        };
 
         await this.taskRepository.update(taskId, { ...updateTaskBody });
 
@@ -68,7 +70,6 @@ export class TaskService {
 
 
     async checkParentIsValid(parentId: number, taskId?: number): Promise<TaskEntity> {
-        if (parentId == null) return; // se o parentId for null, não precisa validar
         if (parentId == taskId) throw new BadRequestException(`Task can't be its own parent`); // valida se o ParentId é diferente do TaskId
 
         const parent = await this.taskRepository.findOne({
