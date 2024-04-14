@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "f841fe3f-ea6f-4b0f-9332-9eacf63fc158",
+		"name": "Tasks Board",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "15502382"
+	},
+	"item": [
+		{
+			"name": "Buscar task types",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/task-type"
+			},
+			"response": []
+		},
+		{
+			"name": "Criar task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Titulo task 1\",\r\n    \"description\": \"Descricao da task 1\",\r\n    \"parentId\": 46,\r\n    \"typeId\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/task"
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar task",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Titulo Novo\",\r\n    \"description\": \"Descricao da task atualizada\",\r\n    \"parentId\": null,\r\n    \"typeId\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/task/39"
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar todas tasks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/task/all"
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar tasks raiz",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/task/roots"
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar task por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/task/42"
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir task",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:3000/task/42"
+			},
+			"response": []
+		}
+	]
+}
