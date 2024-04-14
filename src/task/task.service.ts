@@ -50,8 +50,9 @@ export class TaskService {
         if (updateTaskBody.parentId) {
             if (updateTaskBody.parentId == taskId) throw new BadRequestException(`Task can't be its own parent`); // valida se o ParentId é diferente do TaskId
             await this.checkParentIsValid(updateTaskBody.parentId); // valida se o ParentId existe e se ele tem parent
-            await this.checkIfTaskExistsAndHasChildren(taskId); // valida se a Task existe e tem filhos
         };
+
+        await this.checkIfTaskExistsAndHasChildren(taskId, `Task can't have a parent because it has children`); // valida se a Task existe e tem filhos
 
         await this.taskRepository.update(taskId, { ...updateTaskBody });
 
@@ -84,8 +85,9 @@ export class TaskService {
             relations: ['children']
         });
 
+        console.log(task)
         if (!task) throw new NotFoundException(`Task not found`);
-        if (task.children.length) throw new BadRequestException(customMessage || `Task can't have a parent because it has children`);
+        if (task.children.length) throw new BadRequestException(customMessage || `Task has children`);
 
         return;
     };
