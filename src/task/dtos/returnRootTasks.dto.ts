@@ -6,18 +6,17 @@ export class ReturnRootTasksDTO {
     id: number;
     name: string;
     taskType: ReturnTaskTypeDTO;
-    children: ChildrenDTO[];
+    subtasks: SubtaskDTO[];
 
     constructor(taskEntity: TaskEntity) {
         this.id = taskEntity.id;
         this.name = taskEntity.name;
         this.taskType = new ReturnTaskTypeDTO(taskEntity.taskType);
-        this.children = taskEntity.children.map(child => new ChildrenDTO(child));
+        this.subtasks = taskEntity.subtasks.map(subtask => new SubtaskDTO(subtask));
     };
-
 };
 
-class ChildrenDTO {
+class SubtaskDTO {
     id: number;
     name: string;
     taskType: ReturnTaskTypeDTO;

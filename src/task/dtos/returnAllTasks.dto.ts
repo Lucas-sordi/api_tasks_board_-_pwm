@@ -10,7 +10,7 @@ export class ReturnAllTasksDTO {
     createdAt: Date;
     updatedAt: Date;
     parent?: parentDTO;
-    children: ChilrenDTO[];
+    subtasks: SubtaskDTO[];
 
     constructor(taskEntity: TaskEntity) {
         this.id = taskEntity.id;
@@ -19,13 +19,13 @@ export class ReturnAllTasksDTO {
         this.createdAt = taskEntity.createdAt;
         this.updatedAt = taskEntity.updatedAt;
         this.taskType = new ReturnTaskTypeDTO(taskEntity.taskType);
-        this.children = taskEntity.children.map(child => new ChilrenDTO(child));
+        this.subtasks = taskEntity.subtasks.map(subtask => new SubtaskDTO(subtask));
 
         if (taskEntity.parent) this.parent = new parentDTO(taskEntity);
     };
 };
 
-class ChilrenDTO {
+class SubtaskDTO {
     id: number;
     name: string;
 

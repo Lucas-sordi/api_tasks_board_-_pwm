@@ -1,7 +1,6 @@
 import { TaskTypeEntity } from "../entities/task-type.entity";
 
 export class ReturnTaskTypeDTO {
-    
     id: number;
     type: string;
     
@@ -9,5 +8,4 @@ export class ReturnTaskTypeDTO {
         this.id = taskTypeEntity.id;
         this.type = taskTypeEntity.type;
     };
-
 };

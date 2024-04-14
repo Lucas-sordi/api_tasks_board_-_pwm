@@ -32,5 +32,5 @@ export class TaskEntity {
     parent: TaskEntity;
 
     @OneToMany(() => TaskEntity, (task) => task.parent)
-    children: TaskEntity[];
+    subtasks: TaskEntity[];
 };

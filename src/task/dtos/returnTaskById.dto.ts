@@ -8,7 +8,7 @@ export class ReturnTaskById {
     description: string;
     taskType: ReturnTaskTypeDTO;
     parent?: parentDTO;
-    children: ChildrenDTO[];
+    subtasks: SubtaskDTO[];
     createdAt: Date;
     updatedAt: Date;
 
@@ -17,7 +17,7 @@ export class ReturnTaskById {
         this.name = taskEntity.name;
         this.description = taskEntity.description;
         this.taskType = new ReturnTaskTypeDTO(taskEntity.taskType);
-        this.children = taskEntity.children.map(child => new ChildrenDTO(child));
+        this.subtasks = taskEntity.subtasks.map(subtask => new SubtaskDTO(subtask));
 
         if (taskEntity.parent) this.parent = new parentDTO(taskEntity);
 
@@ -26,7 +26,7 @@ export class ReturnTaskById {
     };
 };
 
-class ChildrenDTO {
+class SubtaskDTO {
     id: number;
     name: string;
     taskType: ReturnTaskTypeDTO;

@@ -15,12 +15,8 @@ export class TaskTypeService {
     };
 
     async getTaskTypeById(id: number): Promise<TaskTypeEntity> {
-        const taskType = await this.taskTypeRepository.findOne({
+        return await this.taskTypeRepository.findOne({
             where: { id }
         });
-
-        if (!taskType) throw new NotFoundException(`Tasktype not found`);
-
-        return taskType;
     };
 };
