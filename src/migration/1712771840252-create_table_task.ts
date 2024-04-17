@@ -4,6 +4,8 @@ export class CreateTableTask1712771840252 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
+            CREATE SEQUENCE IF NOT EXISTS task_id_seq;
+    
             CREATE TABLE IF NOT EXISTS public.task
             (
                 id integer NOT NULL DEFAULT nextval('task_id_seq'),
