@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Query, Post, Put } from '@nestjs/common';
 import { CreateTaskDTO } from './dtos/createTask.dto';
 import { TaskService } from './task.service';
 import { ReturnAllTasksDTO } from './dtos/returnAllTasks.dto';
@@ -27,6 +27,13 @@ export class TaskController {
         const getRootTasks: TaskEntity[] = await this.taskService.getRootTasks();
 
         return getRootTasks.map(task => new ReturnRootTasksDTO(task));
+    };
+
+    @Get('/filter')
+    async filter(@Query('search') search: string): Promise<ReturnRootTasksDTO[]> {        
+        const getTasksByKeyword: TaskEntity[] = await this.taskService.filterTasks(search);
+
+        return getTasksByKeyword.map(task => new ReturnRootTasksDTO(task));
     };
 
     @Get('/:id')

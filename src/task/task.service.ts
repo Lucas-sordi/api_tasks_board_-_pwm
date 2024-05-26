@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { CreateTaskDTO } from './dtos/createTask.dto';
 import { TaskEntity } from './entities/task.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IsNull, Repository } from 'typeorm';
+import { IsNull, Repository, ILike } from 'typeorm';
 import { TaskTypeService } from 'src/task-type/task-type.service';
 
 @Injectable()
@@ -38,6 +38,24 @@ export class TaskService {
         return getTask;
     };
 
+    async filterTasks(search: string): Promise<TaskEntity[]> {
+        let whereClause: any = [];
+    
+        if (search) {
+            whereClause.push({ name: ILike(`%${search}%`) });
+
+            if (!isNaN(Number(search))) {
+                whereClause.push({ id: parseInt(search) });
+            };
+        };
+
+        return await this.taskRepository.find({
+            where: whereClause,
+            relations: ['taskType', 'parent', 'subtasks', 'subtasks.taskType'], 
+            order: { createdAt: 'ASC' } 
+        });
+    };
+    
     async createTask(createTaskBody: CreateTaskDTO): Promise<TaskEntity> {
         await this.checkTaskTypeExists(createTaskBody.typeId);
         if (createTaskBody.parentId) await this.checkParentIsValid(createTaskBody.parentId);
