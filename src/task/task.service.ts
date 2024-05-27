@@ -39,13 +39,13 @@ export class TaskService {
     };
 
     async filterTasks(search: string): Promise<TaskEntity[]> {
-        let whereClause: any = [];
+        let whereClause: any = [ { parentId: IsNull() }];
     
         if (search) {
-            whereClause.push({ name: ILike(`%${search}%`) });
+            whereClause.push({ name: ILike(`%${search}%`), parentId: IsNull() });
 
             if (!isNaN(Number(search))) {
-                whereClause.push({ id: parseInt(search) });
+                whereClause.push({ id: parseInt(search), parentId: IsNull() });
             };
         };
 
