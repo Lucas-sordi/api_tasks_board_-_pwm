@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f841fe3f-ea6f-4b0f-9332-9eacf63fc158",
+		"_postman_id": "c1f752a8-4156-4030-894b-1a9523f5ad65",
 		"name": "Tasks Board",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "15502382"
@@ -11,13 +11,19 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:3000/task-type"
+				"url": "{{host}}/task-type"
 			},
 			"response": []
 		},
 		{
 			"name": "Criar task",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{access_token}}"
+					}
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -29,13 +35,19 @@
 						}
 					}
 				},
-				"url": "http://localhost:3000/task"
+				"url": "{{host}}/task"
 			},
 			"response": []
 		},
 		{
 			"name": "Atualizar task",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{access_token}}"
+					}
+				},
 				"method": "PUT",
 				"header": [],
 				"body": {
@@ -47,7 +59,67 @@
 						}
 					}
 				},
-				"url": "http://localhost:3000/task/1"
+				"url": "{{host}}/task/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Filtro de tasks",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{access_token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/task/filter?search=",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"task",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar tasks raiz",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{access_token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{host}}/task/roots"
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar task por id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{access_token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{host}}/task/123"
 			},
 			"response": []
 		},
@@ -56,34 +128,71 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:3000/task/all"
-			},
-			"response": []
-		},
-		{
-			"name": "Buscar tasks raiz",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": "http://localhost:3000/task/roots"
-			},
-			"response": []
-		},
-		{
-			"name": "Buscar task por id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": "http://localhost:3000/task/1"
+				"url": "{{host}}/task/all"
 			},
 			"response": []
 		},
 		{
 			"name": "Excluir task",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{access_token}}"
+					}
+				},
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:3000/task/1"
+				"url": "{{host}}/task/2"
+			},
+			"response": []
+		},
+		{
+			"name": "Cria usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"lucas\",\r\n    \"password\": \"lucas123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{host}}/auth/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"pm.environment.set(\"access_token\", response.access_token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"lucas\",\r\n    \"password\": \"lucas123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{host}}/auth/login"
 			},
 			"response": []
 		}
