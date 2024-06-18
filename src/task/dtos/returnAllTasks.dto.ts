@@ -11,6 +11,7 @@ export class ReturnAllTasksDTO {
     updatedAt: Date;
     parent?: parentDTO;
     subtasks: SubtaskDTO[];
+    userId: number;
 
     constructor(taskEntity: TaskEntity) {
         this.id = taskEntity.id;
@@ -20,6 +21,7 @@ export class ReturnAllTasksDTO {
         this.updatedAt = taskEntity.updatedAt;
         this.taskType = new ReturnTaskTypeDTO(taskEntity.taskType);
         this.subtasks = taskEntity.subtasks.map(subtask => new SubtaskDTO(subtask));
+        this.userId = taskEntity.userId;
 
         if (taskEntity.parent) this.parent = new parentDTO(taskEntity);
     };

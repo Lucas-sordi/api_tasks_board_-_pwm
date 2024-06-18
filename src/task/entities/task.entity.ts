@@ -1,4 +1,5 @@
 import { TaskTypeEntity } from "src/task-type/entities/task-type.entity";
+import { UserEntity } from "src/user/entities/user.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'task'})
@@ -18,6 +19,9 @@ export class TaskEntity {
     @Column({ name: 'typeId', 'nullable': false })
     typeId: number;
 
+    @Column({ name: 'userId', 'nullable': false })
+    userId: number;
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 
@@ -33,4 +37,8 @@ export class TaskEntity {
 
     @OneToMany(() => TaskEntity, (task) => task.parent)
     subtasks: TaskEntity[];
+
+    @ManyToOne(() => UserEntity, (user) => user.id)
+    @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
+    user: UserEntity;
 };

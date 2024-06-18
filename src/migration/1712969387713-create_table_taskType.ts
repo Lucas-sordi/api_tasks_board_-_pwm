@@ -3,7 +3,6 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 export class CreateTableTaskType1712969387713 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        // Criar a tabela
         await queryRunner.query(`
             CREATE TABLE IF NOT EXISTS public."taskType"
             (
